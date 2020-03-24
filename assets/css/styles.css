@@ -1,16 +1,16 @@
+
+#drinks-total {
+    padding-left: 30px;
+    font-size: 1.2rem;
+}
+
 .drinks-list {
     padding: 30px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
-
 }
 
-.title_image {
-   margin: 0 auto;
-   display: block;
-    height: 200px;
-}
 
 .card-title {
     font-size: 1.2rem;

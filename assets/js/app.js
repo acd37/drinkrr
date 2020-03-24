@@ -57,13 +57,11 @@ const searchByName = (cocktail) => {
         method: "GET",
         url: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`
     }).then((response) => {
-        console.log(response)
         const drinks = formulateDrink(response.drinks);
+        console.log(drinks)
 
-        $("#drinks").empty();
-        $("#drinks-total").empty();
-
-        $("#drinks-total").append("<div>").text(`Great! We found ${drinks.length} drinks for you.`);
+        $("#drinks").empty().hide();
+        $("#drinks-total").empty().hide();
 
         for (let i = 0; i < drinks.length; i++) {
             const singleDrink = $("<div>").addClass("card").attr("style", "width: 18rem");
@@ -73,13 +71,32 @@ const searchByName = (cocktail) => {
             const title = $("<div>").text(drinks[i].drinkTitle).addClass("card-title");
             const category = $("<div>").text(drinks[i].drinkCat).addClass("card-text");
             const isAlcoholic = $("<div>").text(drinks[i].isAlcoholic).addClass("card-text").append("<hr />");
-            const directions = $("<div>").text(drinks[i].directions).addClass("card-text");
+            const directions = $("<div>").text(drinks[i].directions).addClass("card-text").append("<hr />");
+            const ingredients = $("<div>");
 
-            singleDrinkBody.append(title, category, isAlcoholic, directions)
+            for (let j = 0; j < drinks[i].ingredients.length; j++) {
+                console.log('here')
+                const ingredient = drinks[i].ingredients[j].ingredient;
+                const measure = drinks[i].ingredients[j].measure;
+
+                console.log(ingredient, measure)
+
+                if (measure) {
+                    const ingredientLine = $("<div>").text(`${measure} - ${ingredient}`);
+                    ingredients.append(ingredientLine);
+                } else {
+                    const ingredientLine = $("<div>").text(ingredient);
+                    ingredients.append(ingredientLine);
+                }
+            }
+
+            singleDrinkBody.append(title, category, isAlcoholic, directions, ingredients)
             singleDrink.append(thumbnail, singleDrinkBody);
 
-            $("#drinks").append(singleDrink);
+            $("#drinks").append(singleDrink).fadeIn("slow");
         }
+
+        $("#drinks-total").append("<div>").text(`Great! We found ${drinks.length} drink${drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
 
     })
 }
@@ -90,10 +107,61 @@ const searchByIngredient = (ingredient) => {
         method: "GET",
         url: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
     }).then(response => {
-        console.log(response)
+        $("#drinks").empty().hide();
+        $("#drinks-total").empty().hide();
 
+        for (let i = 0; i < response.drinks.length; i++) {
+            const singleDrink = $("<div>").addClass("card").attr("style", "width: 18rem");
+            const thumbnail = $("<img>").attr("src", response.drinks[i].strDrinkThumb).addClass("card-img-top");
+
+            const singleDrinkBody = $("<div>").addClass("card-body");
+            const title = $("<div>").text(response.drinks[i].strDrink).addClass("card-title");
+            const moreButton = $("<button>").addClass("btn btn-primary btn-sm btn-recipe").attr("data-drinkId", response.drinks[i].idDrink).text("Get recipe");
+
+            singleDrinkBody.append(title, moreButton)
+            singleDrink.append(thumbnail, singleDrinkBody);
+
+            $("#drinks").append(singleDrink).fadeIn("slow");
+        }
+
+        $("#drinks-total").append("<div>").text(`Great! We found ${response.drinks.length} drink${response.drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
+    })
+}
+
+const addRecipe = data => {
+
+    const id = $(data).attr('data-drinkid');
+    $.ajax({
+        method: 'GET',
+        url: `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+    }).then(response => {
         const drinks = formulateDrink(response.drinks);
-        console.log(drinks)
+        const recipe = $("<div>");
+        const category = $("<div>").text(drinks[0].drinkCat).addClass("card-text");
+        const isAlcoholic = $("<div>").text(drinks[0].isAlcoholic).addClass("card-text").append("<hr />");
+        const directions = $("<div>").text(drinks[0].directions).addClass("card-text").append("<hr />");
+        const ingredients = $("<div>");
+
+        for (let i = 0; i < drinks[0].ingredients.length; i++) {
+            console.log('here')
+            const ingredient = drinks[0].ingredients[i].ingredient;
+            const measure = drinks[0].ingredients[i].measure;
+
+            console.log(ingredient, measure)
+
+            if (measure) {
+                const ingredientLine = $("<div>").text(`${measure} - ${ingredient}`);
+                ingredients.append(ingredientLine);
+            } else {
+                const ingredientLine = $("<div>").text(ingredient);
+                ingredients.append(ingredientLine);
+            }
+        }
+
+        recipe.append(category, isAlcoholic, directions, ingredients);
+
+        $(data).parent().append(recipe);
+        $(data).hide();
     })
 }
 
@@ -126,7 +194,10 @@ $(document).ready(() => {
         } else {
             alert("no ingredient");
         }
+    })
 
 
+    $(document).on('click', '.btn-recipe', function () {
+        addRecipe(this);
     })
 })
