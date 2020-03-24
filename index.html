@@ -5,25 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 </head>
 
 <body>
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                Drinkrr
+            </a>
+        </nav>
+    </header>
 
-    <h1> Search by name </h1>
-    <form>
-        <input id="name_search" />
-        <button id="name_submit">Search</button>
-    </form>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <img src="assets/img/cocktail.png" class="title_image my-3" alt="">
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-md-4 offset-md-1 text-center">
+                    <h1> Search by name </h1>
+                    <div class="input-group">
+                        <input id="name_search" class="form-control" />
+                        <button id="name_submit" class="btn btn-outline-secondary btn-form">Search</button>
+                    </div>
+                </div>
+                <div class="col-md-4 offset-md-2 text-center">
+                    <h1> Search by ingredient </h1>
+                    <div class="input-group">
+                        <input id="ingredient_search" class="form-control" />
+                        <button id="ingredient_submit" class="btn btn-outline-secondary btn-form">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="drinks-total"></div>
+            <div id="drinks" class="drinks-list"></div>
+        </div>
+    </main>
 
 
-    <h1> Search by ingredient </h1>
-    <form>
-        <input id="ingredient_search" />
-        <button id="ingredient_submit">Search</button>
-    </form>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
     <script src="assets/js/app.js"></script>
 </body>

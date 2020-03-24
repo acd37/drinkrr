@@ -1,0 +1,27 @@
+.drinks-list {
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+.title_image {
+   margin: 0 auto;
+   display: block;
+    height: 200px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #383b3d;
+}
+
+.btn-form {
+    padding: 0.5rem 1.5rem;
+}
+
+.card {
+    box-shadow: 0 5px 14px 0 rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
