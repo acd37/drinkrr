@@ -8,6 +8,19 @@ function Ingredient(ingredient, measure) {
     this.measure = measure;
 }
 
+function paginate(items) {
+
+    let chunkedArray = []
+
+    while (items.length > 0) {
+        chunkedArray.push(items.splice(0, 12));
+    }
+
+    return chunkedArray;
+
+
+}
+
 
 const formulateDrink = (data) => {
 
@@ -95,11 +108,7 @@ const searchByName = (cocktail) => {
             singleDrinkBody.append(title, category, isAlcoholic, directions, ingredients)
             singleDrink.append(thumbnail, singleDrinkBody);
 
-
             $("#drinks").append(singleDrink).fadeIn("slow")
-
-
-
         }
 
         $("#drinks-total").append("<div>").text(`Great! We found ${drinks.length} drink${drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
@@ -136,6 +145,7 @@ const searchByIngredient = (ingredient) => {
 
             $("#drinks").append(singleDrink).fadeIn("slow");
         }
+
 
         $("#drinks-total").append("<div>").text(`Great! We found ${response.drinks.length} drink${response.drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
 
@@ -189,7 +199,8 @@ $(document).ready(() => {
     $("#name_submit").on('click', function (e) {
         e.preventDefault();
         const value = $("#name_search").val();
-
+        $("#name_error").text("");
+        $("#name_search").removeClass("is-invalid")
         if (value !== "") {
             $("#ingredient_error").text("");
             $("#ingredient_search").removeClass("is-invalid")
@@ -207,6 +218,8 @@ $(document).ready(() => {
     $("#ingredient_submit").on('click', function (e) {
         e.preventDefault();
         const value = $("#ingredient_search").val();
+        $("#ingredient_error").text("");
+        $("#ingredient_search").removeClass("is-invalid")
         if (value !== "") {
             $("#name_error").text("");
             $("#name_search").removeClass("is-invalid")
