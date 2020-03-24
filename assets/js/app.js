@@ -57,8 +57,12 @@ const searchByName = (cocktail) => {
         method: "GET",
         url: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`
     }).then((response) => {
+        console.log(response)
+        if (!response.drinks) {
+            return $("#drinks").text("Nothing returned from search");
+        }
+
         const drinks = formulateDrink(response.drinks);
-        console.log(drinks)
 
         $("#drinks").empty().hide();
         $("#drinks-total").empty().hide();
@@ -112,6 +116,10 @@ const searchByIngredient = (ingredient) => {
         method: "GET",
         url: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
     }).then(response => {
+        if (response.length === 0) {
+            return $("#drinks").text("Nothing returned from search");
+        }
+
         $("#drinks").empty().hide();
         $("#drinks-total").empty().hide();
 
