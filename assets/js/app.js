@@ -57,9 +57,10 @@ const searchByName = (cocktail) => {
         method: "GET",
         url: `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktail}`
     }).then((response) => {
-        console.log(response)
         if (!response.drinks) {
-            return $("#drinks").text("Nothing returned from search");
+            $("#drinks-total").empty();
+            $("#drinks").text("Nothing returned from search");
+            return;
         }
 
         const drinks = formulateDrink(response.drinks);
@@ -79,11 +80,8 @@ const searchByName = (cocktail) => {
             const ingredients = $("<div>");
 
             for (let j = 0; j < drinks[i].ingredients.length; j++) {
-                console.log('here')
                 const ingredient = drinks[i].ingredients[j].ingredient;
                 const measure = drinks[i].ingredients[j].measure;
-
-                console.log(ingredient, measure)
 
                 if (measure) {
                     const ingredientLine = $("<div>").text(`${measure} - ${ingredient}`);
@@ -117,7 +115,9 @@ const searchByIngredient = (ingredient) => {
         url: `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
     }).then(response => {
         if (response.length === 0) {
-            return $("#drinks").text("Nothing returned from search");
+            $("#drinks-total").empty();
+            $("#drinks").text("Nothing returned from search");
+            return;
         }
 
         $("#drinks").empty().hide();
@@ -158,11 +158,8 @@ const addRecipe = data => {
         const ingredients = $("<div>");
 
         for (let i = 0; i < drinks[0].ingredients.length; i++) {
-            console.log('here')
             const ingredient = drinks[0].ingredients[i].ingredient;
             const measure = drinks[0].ingredients[i].measure;
-
-            console.log(ingredient, measure)
 
             if (measure) {
                 const ingredientLine = $("<div>").text(`${measure} - ${ingredient}`);
@@ -186,6 +183,8 @@ const addRecipe = data => {
 // **********//
 
 $(document).ready(() => {
+
+    console.log("Get out the console, Terrence.")
 
     $("#name_submit").on('click', function (e) {
         e.preventDefault();
