@@ -192,10 +192,15 @@ $(document).ready(() => {
         const value = $("#name_search").val();
 
         if (value !== "") {
+            $("#ingredient_error").text("");
+            $("#ingredient_search").removeClass("is-invalid")
             $("#name_search").val("");
             searchByName(value);
         } else {
-            alert("no name");
+            $("#ingredient_error").text("");
+            $("#ingredient_search").removeClass("is-invalid")
+            $("#name_search").addClass('is-invalid')
+            $("#name_error").text("Please enter an cocktail name").attr('style', 'color: #cc0000')
         }
     })
 
@@ -204,10 +209,15 @@ $(document).ready(() => {
         e.preventDefault();
         const value = $("#ingredient_search").val();
         if (value !== "") {
+            $("#name_error").text("");
+            $("#name_search").removeClass("is-invalid")
             $("#ingredient_search").val("");
             searchByIngredient(value);
         } else {
-            alert("no ingredient");
+            $("#name_error").text("");
+            $("#name_search").removeClass("is-invalid")
+            $("#ingredient_search").addClass('is-invalid')
+            $("#ingredient_error").text("Please enter a ingredient.").attr('style', 'color: #cc0000')
         }
     })
 
