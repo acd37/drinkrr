@@ -93,11 +93,16 @@ const searchByName = (cocktail) => {
             singleDrinkBody.append(title, category, isAlcoholic, directions, ingredients)
             singleDrink.append(thumbnail, singleDrinkBody);
 
-            $("#drinks").append(singleDrink).fadeIn("slow");
+
+            $("#drinks").append(singleDrink).fadeIn("slow")
+
+
+
         }
 
         $("#drinks-total").append("<div>").text(`Great! We found ${drinks.length} drink${drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
 
+        $("html, body").animate({ scrollTop: $("#drinks-total").offset().top - 30, }, 1200);
     })
 }
 
@@ -125,6 +130,8 @@ const searchByIngredient = (ingredient) => {
         }
 
         $("#drinks-total").append("<div>").text(`Great! We found ${response.drinks.length} drink${response.drinks.length > 1 ? "s" : ""} for you.`).fadeIn("slow");
+
+        $("html, body").animate({ scrollTop: $("#drinks-total").offset().top - 30, }, 1200);
     })
 }
 
